@@ -55,11 +55,14 @@ private:
 
 	uint mLevel;
 	uint mAsteroidCount;
+	GLVector3f mLastDestroyedLocation;
+
 
 	void ResetSpaceship();
 	shared_ptr<GameObject> CreateSpaceship();
 	void CreateGUI();
 	void CreateAsteroids(const uint num_asteroids);
+	void CreateSubAsteroids();
 	shared_ptr<GameObject> CreateExplosion();
 	
 	const static uint SHOW_GAME_OVER = 0;

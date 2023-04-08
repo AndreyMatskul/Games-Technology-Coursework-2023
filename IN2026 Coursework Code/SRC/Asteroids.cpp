@@ -11,6 +11,7 @@
 #include "BoundingSphere.h"
 #include "GUILabel.h"
 #include "Explosion.h"
+#include "SubAsteroid.h"
 
 // PUBLIC INSTANCE CONSTRUCTORS ///////////////////////////////////////////////
 
@@ -20,6 +21,7 @@ Asteroids::Asteroids(int argc, char *argv[])
 {
 	mLevel = 0;
 	mAsteroidCount = 0;
+	mLastDestroyedLocation; 
 }
 
 /** Destructor. */
@@ -104,13 +106,13 @@ void Asteroids::OnSpecialKeyPressed(int key, int x, int y)
 	switch (key)
 	{
 	// If up arrow key is pressed start applying forward thrust
-	case GLUT_KEY_UP: mSpaceship->Thrust(10); break;
+	case GLUT_KEY_UP: mSpaceship->Thrust(30); break;
 	// If left arrow key is pressed start rotating anti-clockwise
 	case GLUT_KEY_LEFT: mSpaceship->Rotate(90); break;
 	// If right arrow key is pressed start rotating clockwise
 	case GLUT_KEY_RIGHT: mSpaceship->Rotate(-90); break;
 	// If down arrow key is pressed start applying backwards thrust
-	case GLUT_KEY_DOWN: mSpaceship->Thrust(-10); break;
+	case GLUT_KEY_DOWN: mSpaceship->Thrust(-30); break;
 	// Default case - do nothing
 	default: break; 
 	}
@@ -144,11 +146,23 @@ void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 		explosion->SetPosition(object->GetPosition());
 		explosion->SetRotation(object->GetRotation());
 		mGameWorld->AddObject(explosion);
+		mLastDestroyedLocation = object->GetPosition();
+		CreateSubAsteroids();
+
 		mAsteroidCount--;
 		if (mAsteroidCount <= 0) 
 		{ 
 			SetTimer(500, START_NEXT_LEVEL); 
 		}
+	}
+	else if (object->GetType() == GameObjectType("SubAsteroid")) {
+		
+		shared_ptr<GameObject> explosion = CreateExplosion();
+		explosion->SetPosition(object->GetPosition());
+		explosion->SetRotation(object->GetRotation());
+		explosion->SetScale(0.5f);
+		mGameWorld->AddObject(explosion);
+
 	}
 }
 
@@ -211,6 +225,24 @@ void Asteroids::CreateAsteroids(const uint num_asteroids)
 		asteroid->SetSprite(asteroid_sprite);
 		asteroid->SetScale(0.2f);
 		mGameWorld->AddObject(asteroid);
+	}
+}
+
+void Asteroids::CreateSubAsteroids()
+{
+	
+	for (uint i = 0; i < 3; i++)
+	{
+		Animation* anim_ptr = AnimationManager::GetInstance().GetAnimationByName("asteroid1");
+		shared_ptr<Sprite> asteroid_sprite
+			= make_shared<Sprite>(anim_ptr->GetWidth(), anim_ptr->GetHeight(), anim_ptr);
+		asteroid_sprite->SetLoopAnimation(true);
+		shared_ptr<GameObject> subasteroid = make_shared<SubAsteroid>();
+		subasteroid->SetBoundingShape(make_shared<BoundingSphere>(subasteroid->GetThisPtr(), 5.0f));
+		subasteroid->SetSprite(asteroid_sprite);
+		subasteroid->SetScale(0.1f);
+		subasteroid->SetPosition(mLastDestroyedLocation);
+		mGameWorld->AddObject(subasteroid);
 	}
 }
 
@@ -295,7 +327,6 @@ shared_ptr<GameObject> Asteroids::CreateExplosion()
 	explosion->Reset();
 	return explosion;
 }
-
 
 
 
