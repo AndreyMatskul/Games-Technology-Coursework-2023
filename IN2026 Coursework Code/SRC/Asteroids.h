@@ -60,7 +60,6 @@ private:
 	shared_ptr<GameObject> CreateSpaceship();
 	void CreateGUI();
 	void CreateAsteroids(const uint num_asteroids);
-	void CreateMiniAsteroid(const uint num_asteroids, GLfloat Angle, GLVector3f Position);
 	shared_ptr<GameObject> CreateExplosion();
 	
 	const static uint SHOW_GAME_OVER = 0;
