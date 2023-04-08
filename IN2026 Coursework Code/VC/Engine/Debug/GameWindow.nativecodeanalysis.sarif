@@ -1,0 +1,155 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C28251",
+          "message": {
+            "text": "Inconsistent annotation for 'exit': this instance has no annotations. See c:\\program files (x86)\\windows kits\\10\\include\\10.0.22000.0\\ucrt\\stdlib.h(56). "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/andre/Documents/GitHub/Games-Technology-Coursework-2023/IN2026 Coursework Code/include/GL/glut.h"
+                },
+                "region": {
+                  "startLine": 147,
+                  "startColumn": 52,
+                  "endLine": 147,
+                  "endColumn": 52
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "exit",
+                  "decoratedName": "exit",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.34.31935.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/Users/andre/Documents/GitHub/Games-Technology-Coursework-2023/IN2026 Coursework Code/include/GL/glut.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "fe189f1d7fe781b5e74b178f89a23e60237f4a502e360a67d665300215407fe6"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/andre/documents/github/games-technology-coursework-2023/in2026 coursework code/src/gamewindow.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "224b4ffeec1d4d2ceb35914ace09a2dc9478aab531083bd30205b3db4301adce"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/andre/documents/github/games-technology-coursework-2023/in2026 coursework code/src/gameutil.h"
+          },
+          "hashes": {
+            "sha-256": "47b4cdf82d6cb6b82aed4c74a6969bb897a08913dae28e9fba6d2f7d9e3242b0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/andre/documents/github/games-technology-coursework-2023/in2026 coursework code/src/glvector.h"
+          },
+          "hashes": {
+            "sha-256": "7513b7cb8ebc3706a412e86b2351932a175f5166ae38ae4bf993a832e4f457a6"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/andre/documents/github/games-technology-coursework-2023/in2026 coursework code/src/gameworld.h"
+          },
+          "hashes": {
+            "sha-256": "a400906bc498d37db68e4299f649694d252d89a11b5291a79b0484ad3a6c3c1b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/andre/documents/github/games-technology-coursework-2023/in2026 coursework code/src/igameworldlistener.h"
+          },
+          "hashes": {
+            "sha-256": "55ae52b94cb2e72aa30f2300989a6f18bbb4e777229cb51d827f3b82a88e1cdb"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/andre/documents/github/games-technology-coursework-2023/in2026 coursework code/src/ikeyboardlistener.h"
+          },
+          "hashes": {
+            "sha-256": "3a601a71c223bfd0711b521bcc54ed0a197ccc91bbaa68897a95aad99939c09e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/andre/documents/github/games-technology-coursework-2023/in2026 coursework code/src/gamedisplay.h"
+          },
+          "hashes": {
+            "sha-256": "40f8cd04d2d0bb83fff790ef354935d6f52a092a91b13f1363ec5d9fa9b6d96b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/andre/documents/github/games-technology-coursework-2023/in2026 coursework code/src/guicontainer.h"
+          },
+          "hashes": {
+            "sha-256": "44ee0eb57dbf8c93ceeee5178423df555fc9ebcb48350276627322e09aa19131"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/andre/documents/github/games-technology-coursework-2023/in2026 coursework code/src/guicomponent.h"
+          },
+          "hashes": {
+            "sha-256": "c7e60cb32d393d7d630961c4e7cf3adbf69a75ee15df09d6a454160d49b69492"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/andre/documents/github/games-technology-coursework-2023/in2026 coursework code/src/gamewindow.h"
+          },
+          "hashes": {
+            "sha-256": "92199b5193150fc62f45078256cc7c2148e686a4d85183cc20a94b2a9b77fe54"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/andre/documents/github/games-technology-coursework-2023/in2026 coursework code/src/glutwindow.h"
+          },
+          "hashes": {
+            "sha-256": "2bc734174bfbe4c8103240ee05823e4ec7328ffd1a7941ea532f28600bc7513d"
+          }
+        }
+      ]
+    }
+  ]
+}

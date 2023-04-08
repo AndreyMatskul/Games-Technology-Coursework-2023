@@ -25,3 +25,4 @@
   Animation.cpp
   Generating Code...
   Engine.vcxproj -> C:\Users\andre\Documents\GitHub\Games-Technology-Coursework-2023\IN2026 Coursework Code\lib\Engine.lib
+  Warning: Full debug symbol generation from partial PDBs is not supported for static libraries.

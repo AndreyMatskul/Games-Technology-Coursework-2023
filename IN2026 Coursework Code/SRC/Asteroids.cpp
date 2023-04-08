@@ -11,6 +11,7 @@
 #include "BoundingSphere.h"
 #include "GUILabel.h"
 #include "Explosion.h"
+#include "MiniAsteroid.h"
 
 // PUBLIC INSTANCE CONSTRUCTORS ///////////////////////////////////////////////
 
@@ -140,14 +141,27 @@ void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 {
 	if (object->GetType() == GameObjectType("Asteroid"))
 	{
+		GLfloat Angle = object->GetRotation();
+		GLVector3f Position = object->GetPosition();
+
+		shared_ptr<GameObject> explosion = CreateExplosion();
+		explosion->SetPosition(object->GetPosition());
+		explosion->SetRotation(object->GetRotation());
+		mGameWorld->AddObject(explosion);
+		CreateMiniAsteroid(3, Angle, Position);
+		mAsteroidCount = mAsteroidCount + 3;
+	}
+
+	if (object->GetType() == GameObjectType("MiniAsteroid"))
+	{
 		shared_ptr<GameObject> explosion = CreateExplosion();
 		explosion->SetPosition(object->GetPosition());
 		explosion->SetRotation(object->GetRotation());
 		mGameWorld->AddObject(explosion);
 		mAsteroidCount--;
-		if (mAsteroidCount <= 0) 
-		{ 
-			SetTimer(500, START_NEXT_LEVEL); 
+		if (mAsteroidCount <= 0)
+		{
+			SetTimer(500, START_NEXT_LEVEL);
 		}
 	}
 }
@@ -211,6 +225,23 @@ void Asteroids::CreateAsteroids(const uint num_asteroids)
 		asteroid->SetSprite(asteroid_sprite);
 		asteroid->SetScale(0.2f);
 		mGameWorld->AddObject(asteroid);
+	}
+}
+
+void Asteroids::CreateMiniAsteroid(const uint num_asteroids, GLfloat Angle, GLVector3f Position)
+{
+	mAsteroidCount = num_asteroids;
+	for (uint i = 0; i < num_asteroids; i++)
+	{
+		Animation* anim_ptr = AnimationManager::GetInstance().GetAnimationByName("asteroid1");
+		shared_ptr<Sprite> asteroid_sprite
+			= make_shared<Sprite>(anim_ptr->GetWidth(), anim_ptr->GetHeight(), anim_ptr);
+		asteroid_sprite->SetLoopAnimation(true);
+		shared_ptr<GameObject> miniasteroid = make_shared<MiniAsteroid>();
+		miniasteroid->SetBoundingShape(make_shared<BoundingSphere>(miniasteroid->GetThisPtr(), 5.0f));
+		miniasteroid->SetSprite(asteroid_sprite);
+		miniasteroid->SetScale(0.1f);
+		mGameWorld->AddObject(miniasteroid);
 	}
 }
 
