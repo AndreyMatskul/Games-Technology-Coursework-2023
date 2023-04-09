@@ -37,6 +37,7 @@ public:
 	// Declaration of the IPlayerLister interface //////////////////////////////
 
 	void OnPlayerKilled(int lives_left);
+	void OnPlayerHealed(int lives_left);
 
 	// Declaration of IGameWorldListener interface //////////////////////////////
 
@@ -63,6 +64,7 @@ private:
 	void CreateGUI();
 	void CreateAsteroids(const uint num_asteroids);
 	void CreateSubAsteroids();
+	void CreatePickup();
 	shared_ptr<GameObject> CreateExplosion();
 	
 	const static uint SHOW_GAME_OVER = 0;

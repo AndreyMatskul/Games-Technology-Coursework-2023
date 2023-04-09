@@ -21,6 +21,7 @@ bool SubAsteroid::CollisionTest(shared_ptr<GameObject> o)
 {
 	if (GetType() == o->GetType()) return false;
 	if (o->GetType() == GameObjectType("Asteroid")) return false;
+	if (o->GetType() == GameObjectType("Pickup")) return false;
 	if (mBoundingShape.get() == NULL) return false;
 	if (o->GetBoundingShape().get() == NULL) return false;
 	return mBoundingShape->CollisionTest(o->GetBoundingShape());

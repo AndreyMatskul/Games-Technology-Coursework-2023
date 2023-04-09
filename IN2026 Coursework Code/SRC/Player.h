@@ -24,6 +24,12 @@ public:
 			mLives -= 1;
 			FirePlayerKilled();
 		}
+
+		if (object->GetType() == GameObjectType("Pickup")) {
+			mLives += 1;
+			PlayerHealed();
+		}
+
 	}
 
 	void AddListener(shared_ptr<IPlayerListener> listener)
@@ -37,6 +43,15 @@ public:
 		for (PlayerListenerList::iterator lit = mListeners.begin();
 			lit != mListeners.end(); ++lit) {
 			(*lit)->OnPlayerKilled(mLives);
+		}
+	}
+
+	void PlayerHealed()
+	{
+		// Send message to all listeners
+		for (PlayerListenerList::iterator lit = mListeners.begin();
+			lit != mListeners.end(); ++lit) {
+			(*lit)->OnPlayerHealed(mLives);
 		}
 	}
 

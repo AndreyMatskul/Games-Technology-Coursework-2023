@@ -12,6 +12,7 @@
 #include "GUILabel.h"
 #include "Explosion.h"
 #include "SubAsteroid.h"
+#include "Pickup.h"
 
 // PUBLIC INSTANCE CONSTRUCTORS ///////////////////////////////////////////////
 
@@ -59,11 +60,13 @@ void Asteroids::Start()
 	Animation *explosion_anim = AnimationManager::GetInstance().CreateAnimationFromFile("explosion", 64, 1024, 64, 64, "explosion_fs.png");
 	Animation *asteroid1_anim = AnimationManager::GetInstance().CreateAnimationFromFile("asteroid1", 128, 8192, 128, 128, "asteroid1_fs.png");
 	Animation *spaceship_anim = AnimationManager::GetInstance().CreateAnimationFromFile("spaceship", 128, 128, 128, 128, "spaceship_fs.png");
+	Animation *pickup_anim = AnimationManager::GetInstance().CreateAnimationFromFile("pickup", 512, 512, 512, 512, "QuestionPickup.png");
 
 	// Create a spaceship and add it to the world
 	mGameWorld->AddObject(CreateSpaceship());
 	// Create some asteroids and add them to the world
 	CreateAsteroids(10);
+	CreatePickup();
 
 	//Create the GUI
 	CreateGUI();
@@ -106,7 +109,7 @@ void Asteroids::OnSpecialKeyPressed(int key, int x, int y)
 	switch (key)
 	{
 	// If up arrow key is pressed start applying forward thrust
-	case GLUT_KEY_UP: mSpaceship->Thrust(30); break;
+	case GLUT_KEY_UP: mSpaceship->Thrust(20); break;
 	// If left arrow key is pressed start rotating anti-clockwise
 	case GLUT_KEY_LEFT: mSpaceship->Rotate(90); break;
 	// If right arrow key is pressed start rotating clockwise
@@ -164,6 +167,10 @@ void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 		mGameWorld->AddObject(explosion);
 
 	}
+	else if (object->GetType() == GameObjectType("Pickup")) {
+
+	
+	}
 }
 
 // PUBLIC INSTANCE METHODS IMPLEMENTING ITimerListener ////////////////////////
@@ -181,6 +188,7 @@ void Asteroids::OnTimer(int value)
 		mLevel++;
 		int num_asteroids = 10 + 2 * mLevel;
 		CreateAsteroids(num_asteroids);
+		CreatePickup();
 	}
 
 	if (value == SHOW_GAME_OVER)
@@ -245,6 +253,19 @@ void Asteroids::CreateSubAsteroids()
 		mGameWorld->AddObject(subasteroid);
 	}
 }
+
+void Asteroids::CreatePickup()
+{
+	Animation* anim_ptr = AnimationManager::GetInstance().GetAnimationByName("pickup");
+	shared_ptr<Sprite> pickup_sprite = make_shared<Sprite>(anim_ptr->GetWidth(), anim_ptr->GetHeight(), anim_ptr);
+	pickup_sprite->SetLoopAnimation(true);
+	shared_ptr<GameObject> pickup = make_shared<Pickup>();
+	pickup->SetBoundingShape(make_shared<BoundingSphere>(pickup->GetThisPtr(), 5.0f));
+	pickup->SetSprite(pickup_sprite);
+	pickup->SetScale(0.025f);
+	mGameWorld->AddObject(pickup);
+}
+
 
 void Asteroids::CreateGUI()
 {
@@ -314,6 +335,16 @@ void Asteroids::OnPlayerKilled(int lives_left)
 	{
 		SetTimer(500, SHOW_GAME_OVER);
 	}
+}
+
+void Asteroids::OnPlayerHealed(int lives_left)
+{
+	// Format the lives left message using an string-based stream
+	std::ostringstream msg_stream;
+	msg_stream << "Lives: " << lives_left;
+	// Get the lives left message as a string
+	std::string lives_msg = msg_stream.str();
+	mLivesLabel->SetText(lives_msg);
 }
 
 shared_ptr<GameObject> Asteroids::CreateExplosion()
